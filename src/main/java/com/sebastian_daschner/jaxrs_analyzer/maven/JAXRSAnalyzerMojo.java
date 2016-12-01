@@ -92,6 +92,13 @@ public class JAXRSAnalyzerMojo extends AbstractMojo {
     private File outputDirectory;
 
     /**
+     * @parameter property="project.build.sourceDirectory"
+     * @required
+     * @readonly
+     */
+    private File sourceDirectory;
+
+    /**
      * @parameter property="project.build.directory"
      * @required
      * @readonly
@@ -154,6 +161,9 @@ public class JAXRSAnalyzerMojo extends AbstractMojo {
         final Set<Path> projectPaths = Collections.singleton(outputDirectory.toPath());
         LogProvider.debug("Project paths are: " + projectPaths);
 
+        final Set<Path> projectSourcePaths = Collections.singleton(sourceDirectory.toPath());
+	    LogProvider.debug("Project source paths are: " + projectPaths);
+
         // create target sub-directory
         resourcesDirectory = Paths.get(buildDirectory.getPath(), "jaxrs-analyzer").toFile();
         if (!resourcesDirectory.exists() && !resourcesDirectory.mkdirs())
@@ -163,7 +173,7 @@ public class JAXRSAnalyzerMojo extends AbstractMojo {
 
         // start analysis
         final long start = System.currentTimeMillis();
-        new JAXRSAnalyzer(projectPaths, dependencyPaths, project.getName(), project.getVersion(), backend, fileLocation).analyze();
+        new JAXRSAnalyzer(projectPaths, projectSourcePaths, dependencyPaths, project.getName(), project.getVersion(), backend, fileLocation).analyze();
         LogProvider.debug("Analysis took " + (System.currentTimeMillis() - start) + " ms");
     }
 

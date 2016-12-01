@@ -30,7 +30,7 @@
         <dependency>
             <groupId>com.sebastian-daschner</groupId>
             <artifactId>jaxrs-analyzer</artifactId>
-            <version>0.11-SNAPSHOT</version>
+            <version>0.11-patched</version>
         </dependency>
         <dependency>
             <groupId>org.eclipse.aether</groupId>
